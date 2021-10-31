@@ -8,10 +8,10 @@ import sys
 import numpy as np
 import keras.backend as K
 from keras.initializers import RandomNormal
-from keras.engine.topology import Layer, InputSpec
+from tensorflow.keras.layers import Layer, InputSpec
 from keras.models import Model, Sequential
 from keras.layers import Dense, Dropout, Input
-from keras.optimizers import SGD
+from tensorflow.keras.optimizers import SGD
 from sklearn.preprocessing import normalize
 from keras.callbacks import LearningRateScheduler
 from sklearn.utils.linear_assignment_ import linear_assignment
@@ -62,7 +62,7 @@ class ClusteringLayer(Layer):
                                      shape=(None, input_dim))]
 
         self.W = K.variable(self.initial_weights)
-        self.trainable_weights = [self.W]
+        self._trainable_weights = [self.W]
 
     def call(self, x, mask=None):
         q = 1.0/(1.0 + K.sqrt(K.sum(K.square(K.expand_dims(x, 1) - self.W), axis=2))**2 /self.alpha)
